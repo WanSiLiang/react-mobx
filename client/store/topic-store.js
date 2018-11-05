@@ -29,10 +29,13 @@ export default class TopicStore {
     }
   }
 
-  @action fetchTopicsAndMore(){
+  @action fetchTopicsAndMore(tab){
     return  new Promise(((resolve, reject) => {
       this.loading = true;
-      axios.get('https://cnodejs.org/api/v1/topics')
+      axios.get('https://cnodejs.org/api/v1/topics',{
+        params: {
+          tab: tab
+        }})
         .then((resp) => {
           if (200 === resp.status ) {
             if (this.topics.length === resp.data.data.length || this.topics.length > 30) {
@@ -44,6 +47,7 @@ export default class TopicStore {
             resp.data.data.slice(0, sliceNumNew * 8).forEach(topic => {
               this.topics.push(new Topic(topic))
             });
+            console.log(this.topics);
             this.loading = false;
             this.sliceNum = sliceNumNew;
             resolve()

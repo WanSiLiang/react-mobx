@@ -32,28 +32,36 @@ export default class Homew extends React.Component {
       menuNames: ['首页', '未读消息', '新手入门', 'API', '关于', '设置', '退出'],
     };
     this.changeTab = this.changeTab.bind(this);
+    this.getTabParam = this.getTabParam.bind(this);
   }
 
 
   componentDidMount() {
-
+    this.props.topicStore.fetchTopicsAndMore(this.getTabParam());
   }
 
   componentWillReceiveProps(nextProps){
     if (nextProps.location !== this.props.location){
-        this.props.topicStore.fetchTopicsAndMore();
+        this.props.topicStore.fetchTopicsAndMore(queryString.parse(nextProps.location.search).tabParam);
     }
   }
 
   changeTab(activeKey) {
+    this.props.topicStore.sliceNum = 0 ;
+    this.props.topicStore.topics = [] ;
     this.props.history.push({
       pathname: './homew',
       search: `?tabParam=${activeKey}`,
     })
   }
-  render() {
+
+  getTabParam(){
     const query = queryString.parse(this.props.location.search);
-    const tabParam = query.tabParam || 'all';
+    return query.tabParam || 'all';
+  }
+
+  render() {
+    const tabParam = this.getTabParam();
     const { menuNames = [] } = this.state;
     const MenuIems = Array.from(menuNames,
       menuName => (<MenuItem key={menuName} style={{ margin: 'auto' }}>{menuName}</MenuItem>));
@@ -61,7 +69,7 @@ export default class Homew extends React.Component {
     const TabPanes = Object.keys(tabsAttribute)
       .map(tabkey => (
         <TabPane tab={tabsAttribute[tabkey].text} key={tabkey} >
-          <ListItems tabAttribute={tabsAttribute[tabkey]} />
+          <ListItems tabAttribute={tabsAttribute[tabkey]} tabParam={tabParam}/>
         </TabPane>));
 
     return (

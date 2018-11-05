@@ -20,16 +20,16 @@ export default class ListItems extends React.Component {
     this.changeHasMoreToTrue = this.changeHasMoreToTrue.bind(this);
   }
   componentDidMount() {
-    this.props.topicStore.fetchTopicsAndMore();
+
   }
 
   handleInfiniteOnLoad() {
     this.props.topicStore.loading = true;
-    setTimeout(()=>this.props.topicStore.fetchTopicsAndMore(),1000)
+    setTimeout(()=>this.props.topicStore.fetchTopicsAndMore(this.props.tabParam),1000)
   }
 
   changeHasMoreToTrue(){
-    setTimeout(()=>this.props.topicStore.changeHasMoreToTrue(),3000);
+    setTimeout(()=>this.props.topicStore.changeHasMoreToTrue(this.props.tabParam),3000);
   }
 
   render() {
@@ -85,8 +85,8 @@ ListItems.wrappedComponent.propTypes={
 };
 
 ListItems.prototypes = {
-
   tabAttribute:PropTypes.string.isRequired,
+  tabParam:PropTypes.string,
 };
 
 
