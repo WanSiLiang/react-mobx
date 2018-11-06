@@ -5,11 +5,11 @@ import { List, Avatar, Spin, message ,Tag} from 'antd'
 import InfiniteScroll from 'react-infinite-scroller';
 import PropTypes from 'prop-types';
 import { observer, inject } from 'mobx-react'
+import { browserHistory } from 'react-router'
 
 @inject(stores => {
   return {
-    appState:stores.appState,
-    topicStore:stores.topicStore,
+    topicsStore:stores.topicsStore,
   }
 })
 @observer
@@ -18,23 +18,28 @@ export default class ListItems extends React.Component {
     super(props);
     this.handleInfiniteOnLoad = this.handleInfiniteOnLoad.bind(this);
     this.changeHasMoreToTrue = this.changeHasMoreToTrue.bind(this);
+    this.showTopicDetail = this.showTopicDetail.bind(this);
   }
   componentDidMount() {
 
   }
 
   handleInfiniteOnLoad() {
-    this.props.topicStore.loading = true;
-    setTimeout(()=>this.props.topicStore.fetchTopicsAndMore(this.props.tabParam),1000)
+    this.props.topicsStore.loading = true;
+    setTimeout(()=>this.props.topicsStore.fetchTopicsAndMore(this.props.tabParam),1000)
   }
 
   changeHasMoreToTrue(){
-    setTimeout(()=>this.props.topicStore.changeHasMoreToTrue(this.props.tabParam),3000);
+    setTimeout(()=>this.props.topicsStore.changeHasMoreToTrue(this.props.tabParam),3000);
   }
 
+  showTopicDetail(topicID){
+    console.log('showTopicDetail',topicID);
+    browserHistory.push('/detail');
+  }
   render() {
 
-    const {loading ,hasMore,topics} = this.props.topicStore;
+    const {loading ,hasMore,topics} = this.props.topicsStore;
     const {tabAttribute} = this.props;
     if (!hasMore) {
       message.warning('已获取全部数据');
@@ -55,7 +60,7 @@ export default class ListItems extends React.Component {
           <List
             dataSource={topics}
             renderItem={item => (
-              <List.Item>
+              <List.Item onClick={() => this.showTopicDetail(item.id)}>
                 <List.Item.Meta
                   avatar={<Avatar src={item.author.avatar_url} />}
                   title={ <span>
@@ -80,8 +85,7 @@ export default class ListItems extends React.Component {
   }
 }
 ListItems.wrappedComponent.propTypes={
-  appState:PropTypes.object.isRequired,
-  topicStore:PropTypes.object.isRequired,
+  topicsStore:PropTypes.object.isRequired,
 };
 
 ListItems.prototypes = {

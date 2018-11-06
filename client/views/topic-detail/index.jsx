@@ -1,5 +1,13 @@
 import React from 'react';
+import { inject, observer } from 'mobx-react'
+import PropTyeps from 'prop-types'
 
+@inject(stores => {
+  return {
+    topic:stores.topic,
+  }
+})
+@observer
 export default class TopicDetail extends React.Component {
   componentWillMount() {
 
@@ -7,7 +15,11 @@ export default class TopicDetail extends React.Component {
 
   render() {
     return (
-      <div>This is TopicDetail</div>
+      <div>{this.props.topic.id}</div>
     )
   }
 }
+
+TopicDetail.prototypes = {
+  topic : PropTyeps.object.isRequired,
+};

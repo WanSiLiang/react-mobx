@@ -9,19 +9,15 @@ import ListItems from '../topic-list/list-item'
 
 import { tabsAttribute } from '../../utils/constants'
 
-const { Header, Footer, Content } = Layout;
-const { Item: MenuItem } = Menu;
 const { TabPane } = Tabs;
-const Search = Input.Search;
 
 @inject(stores => {
   return {
-    appState:stores.appState,
-    topicStore:stores.topicStore,
+    topicsStore:stores.topicsStore,
   }
 })
 @observer
-export default class Homew extends React.Component {
+export default  class Homew extends React.Component {
   static contextTypes = {
     router: PropTypes.object,
   };
@@ -37,18 +33,18 @@ export default class Homew extends React.Component {
 
 
   componentDidMount() {
-    this.props.topicStore.fetchTopicsAndMore(this.getTabParam());
+    this.props.topicsStore.fetchTopicsAndMore(this.getTabParam());
   }
 
   componentWillReceiveProps(nextProps){
     if (nextProps.location !== this.props.location){
-        this.props.topicStore.fetchTopicsAndMore(queryString.parse(nextProps.location.search).tabParam);
+        this.props.topicsStore.fetchTopicsAndMore(queryString.parse(nextProps.location.search).tabParam);
     }
   }
 
   changeTab(activeKey) {
-    this.props.topicStore.sliceNum = 0 ;
-    this.props.topicStore.topics = [] ;
+    this.props.topicsStore.sliceNum = 0 ;
+    this.props.topicsStore.topics = [] ;
     this.props.history.push({
       pathname: './homew',
       search: `?tabParam=${activeKey}`,
@@ -62,9 +58,6 @@ export default class Homew extends React.Component {
 
   render() {
     const tabParam = this.getTabParam();
-    const { menuNames = [] } = this.state;
-    const MenuIems = Array.from(menuNames,
-      menuName => (<MenuItem key={menuName} style={{ margin: 'auto' }}>{menuName}</MenuItem>));
 
     const TabPanes = Object.keys(tabsAttribute)
       .map(tabkey => (
@@ -73,37 +66,14 @@ export default class Homew extends React.Component {
         </TabPane>));
 
     return (
-      <Layout>
-        <Header style={{ background: '#444' }}>
-          <div style={{ float: 'left', background: '#444', marginRight: '30px' }}>
-            <Icon type="mail" />Navigation One
-          </div>
-          <div style={{ float: 'left', background: '#444', marginRight: '30px' }}>
-            <Search
-              placeholder="input search text"
-              onSearch={value => console.log(value)}
-              enterButton
-            />
-          </div>
-          <Menu mode="horizontal" style={{ lineHeight: '64px', background: '#444' }} theme="dark">
-            {MenuIems}
-          </Menu>
-        </Header>
-        <Content >
           <Tabs defaultActiveKey="all" activeKey={tabParam} style={{ background: '#f6f6f6' }} onChange={activeKey => this.changeTab(activeKey)}>
             {TabPanes}
           </Tabs>
-        </Content>
-        <Footer>
-            Footer
-        </Footer>
-      </Layout>
     )
   }
 }
 
 Homew.prototypes = {
   location: PropTypes.object.isRequired,
-  appState:PropTypes.object.isRequired,
-  topicStore:PropTypes.object.isRequired,
+  topicsStore:PropTypes.object.isRequired,
 };
