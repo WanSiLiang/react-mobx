@@ -8,6 +8,11 @@ export class Topic {
   }
 
   @observable loading = false;
+  @observable tt ;
+
+  @action fillTopic(topic = {}) {
+    new Topic(topic)
+  }
 }
 
 export default class TopicsStore {

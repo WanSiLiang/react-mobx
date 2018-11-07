@@ -14,8 +14,13 @@ export default class TopicDetail extends React.Component {
   }
 
   render() {
+    console.log(this.props.topic);
     return (
-      <div>{this.props.topic.id}</div>
+      <div>
+        1111111111111
+        {this.props.topic.tt}
+        {this.props.topic[0].id}
+      </div>
     )
   }
 }

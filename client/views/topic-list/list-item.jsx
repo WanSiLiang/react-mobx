@@ -5,15 +5,21 @@ import { List, Avatar, Spin, message ,Tag} from 'antd'
 import InfiniteScroll from 'react-infinite-scroller';
 import PropTypes from 'prop-types';
 import { observer, inject } from 'mobx-react'
-import { browserHistory } from 'react-router'
+
+import {Topic} from '../../store/topics-store'
 
 @inject(stores => {
   return {
     topicsStore:stores.topicsStore,
+    topic:stores.topic,
   }
 })
 @observer
 export default class ListItems extends React.Component {
+  // 这一步是重点
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  };
   constructor(props) {
     super(props);
     this.handleInfiniteOnLoad = this.handleInfiniteOnLoad.bind(this);
@@ -34,8 +40,13 @@ export default class ListItems extends React.Component {
   }
 
   showTopicDetail(topicID){
-    console.log('showTopicDetail',topicID);
-    browserHistory.push('/detail');
+    let currentTopic = this.props.topicsStore.topics.filter((topic) => topic.id === topicID);
+    this.props.topic.fillTopic(currentTopic);
+    this.props.topic.tt =  topicID;
+    this.context.router.history.push({
+      pathname:`./detail`
+      })
+
   }
   render() {
 
@@ -86,6 +97,7 @@ export default class ListItems extends React.Component {
 }
 ListItems.wrappedComponent.propTypes={
   topicsStore:PropTypes.object.isRequired,
+  topic:PropTypes.object.isRequired,
 };
 
 ListItems.prototypes = {
