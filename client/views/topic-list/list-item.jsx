@@ -43,6 +43,8 @@ export default class ListItems extends React.Component {
     let currentTopic = this.props.topicsStore.topics.filter((topic) => topic.id === topicID);
     this.props.topic.fillTopic(currentTopic);
     this.props.topic.tt =  topicID;
+    //麻烦老师帮忙看看 为什么这个组件的this.props.history = undefinded
+    //他的父组件  ./home /index.jsx  this.props.history 就是 react-router-dom 提供的 history 对象
     this.context.router.history.push({
       pathname:`./detail`
       })
