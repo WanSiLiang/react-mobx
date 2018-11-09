@@ -35,6 +35,7 @@ const topic = new Topic(initialState.topic);
  * 声明一个渲染的方法6666
  sdf677sd
  fsdf7778sdfasd8888
+ 9999
  * */
 const render = (Component) => {
   ReactDOM.hydrate(
