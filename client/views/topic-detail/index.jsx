@@ -18,8 +18,8 @@ export default class TopicDetail extends React.Component {
     return (
       <div>
         1111111111111
-        {this.props.topic.tt}
-        {this.props.topic[0].id}
+        <p>ID 的一种拿法{this.props.topic.tt}</p>
+        <p>ID 的另一种拿法{this.props.topic[0].id}</p>
       </div>
     )
   }

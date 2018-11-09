@@ -11,7 +11,7 @@ export class Topic {
   @observable tt ;
 
   @action fillTopic(topic = {}) {
-    new Topic(topic)
+    extendObservable(this, topic);
   }
 }
 
