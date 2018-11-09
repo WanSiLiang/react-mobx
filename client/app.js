@@ -32,7 +32,7 @@ const appState = new AppState(initialState.appState);
 const topicsStore = new TopicsStore(initialState.topicsStore);
 const topic = new Topic(initialState.topic);
 /**
- * 声明一个渲染的方法66666
+ * 声明一个渲染的方法6666677777
  * */
 const render = (Component) => {
   ReactDOM.hydrate(
