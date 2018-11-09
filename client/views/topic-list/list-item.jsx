@@ -16,7 +16,7 @@ import {Topic} from '../../store/topics-store'
 })
 @observer
 export default class ListItems extends React.Component {
-  // 这safas一sdgs步7779999是sdgsdgsg重点sdg77888
+  // 这safas一sdgs步7779999是sdgsdgsg重点sdg77888gdgdgdg
   static contextTypes = {
     router: PropTypes.object.isRequired
   };
