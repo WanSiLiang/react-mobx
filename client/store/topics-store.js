@@ -1,4 +1,4 @@
-import { observable, toJS, action, computed, extendObservable, autorun } from 'mobx'
+import {observable, toJS, action, computed, extendObservable, autorun} from 'mobx'
 import axios from 'axios'
 
 
@@ -8,20 +8,42 @@ export class Topic {
   }
 
   @observable loading = false;
-  @observable tt ;
+  @observable tt;
 
   @action fillTopic(topic = {}) {
     extendObservable(this, topic);
   }
+
+  @observable title = "Bar"
+
+  @action setTitle(title) {
+    this.title = title;
+  }
+
+  @observable  author = {
+    name: "Michel"
+  }
+
+  @action setAuthor(author) {
+    this.author = author;
+  }
+
+  @action setAuthorName(authorName) {
+    this.author.name = authorName;
+  }
+
+  @observable  likes = [
+    "John", "Sara"
+  ]
 }
 
 export default class TopicsStore {
   @observable topics;
-  @observable loading ;
+  @observable loading;
   @observable sliceNum;
-  @observable hasMore ;
+  @observable hasMore;
 
-  constructor({ loading, topics, sliceNum, hasMore } = { loading: false, topics: [], sliceNum: 0, hasMore: true }) {
+  constructor({loading, topics, sliceNum, hasMore} = {loading: false, topics: [], sliceNum: 0, hasMore: true}) {
     this.loading = loading;
     this.topics = topics.map(topic => new Topic(topic));
     this.sliceNum = sliceNum;
@@ -40,7 +62,8 @@ export default class TopicsStore {
       axios.get('https://cnodejs.org/api/v1/topics', {
         params: {
           tab,
-        } })
+        }
+      })
         .then((resp) => {
           if (resp.status === 200) {
             if (this.topics.length === resp.data.data.length || this.topics.length > 30) {
@@ -59,9 +82,9 @@ export default class TopicsStore {
             reject()
           }
         }).catch((err) => {
-          reject(err);
-          this.loading = false;
-        })
+        reject(err);
+        this.loading = false;
+      })
     }))
   }
 }
