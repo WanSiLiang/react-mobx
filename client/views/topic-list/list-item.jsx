@@ -6,7 +6,6 @@ import InfiniteScroll from 'react-infinite-scroller';
 import PropTypes from 'prop-types';
 import { observer, inject } from 'mobx-react'
 
-import {Topic} from '../../store/topics-store'
 
 @inject(stores => {
   return {

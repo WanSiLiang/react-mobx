@@ -21,11 +21,16 @@ export class Topic {
   }
 
   @observable  author = {
-    name: "Michel"
+    name: "Michel",
+    like: 'like'
   }
 
   @action setAuthor(author) {
     this.author = author;
+  }
+
+  @action setAuthorLike() {
+    this.author.like = 'wsl';
   }
 
   @action setAuthorName(authorName) {
@@ -35,6 +40,26 @@ export class Topic {
   @observable  likes = [
     "John", "Sara"
   ]
+
+  @action setLikes(){
+    this.likes[1] = 'wsl';
+  }
+
+  @observable arrObjs = [
+    {title: "Spoil tea", completed: true},
+    {title: "Make coffee", completed: false}
+  ]
+
+  @action setArrObjs(){
+    let t1 = new Date().getTime();
+    let arr = new Array(15000).fill({
+      title: "Spoil tea", completed: true
+    })
+    let t2 = new Date().getTime();
+    console.log('15000 Store 注入时 耗时' + (t2 - t1));
+    this.arrObjs = arr;
+    // this.arrObjs[1].title = 'wsl'
+  }
 }
 
 export default class TopicsStore {

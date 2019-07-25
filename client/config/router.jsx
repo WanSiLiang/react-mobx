@@ -6,6 +6,7 @@ import TopicDetail from '../views/topic-detail/index';
 import TestApi from '../views/test/api-test';
 import Homew from '../views/home/index';
 import ListItems from '../views/topic-list/list-item';
+import ArrObjs from '../views/study-mobx/arrobjs';
 
 
 export default () => [
@@ -15,4 +16,5 @@ export default () => [
   <Route path="/testApi" component={TestApi} key="testApi" />,
   <Route path="/homew" component={Homew} key="homew" />,
   <Route path="/listItems" component={ListItems} key="ListItems" />,
+  <Route path="/arrobjs" component={ArrObjs} key="ArrObjs" />,
 ]
