@@ -58,6 +58,7 @@ export class Topic {
     let t2 = new Date().getTime();
     console.log('15000 Store 注入时 耗时' + (t2 - t1));
     this.arrObjs = arr;
+    console.log('Topic.setArrObjs');
     // this.arrObjs[1].title = 'wsl'
   }
 }

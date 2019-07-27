@@ -4,10 +4,10 @@ import {inject, observer} from 'mobx-react'
 
 const Message = observer(({message}) =>
   <div>
-    <div> Message render ===> {message.title}</div>
-    <Author author={message.author}/>
-    <Likes likes={message.likes}/>
-    <Likes3 obj={message.author}/>
+    {/*<div> Message render ===> {message.title}</div>*/}
+    {/*<Author author={message.author}/>*/}
+    {/*<Likes likes={message.likes}/>*/}
+    {/*<Likes3 obj={message.author}/>*/}
     <Likes2 arrObjs={message.arrObjs}/>
 
   </div>
@@ -26,7 +26,7 @@ const Likes = observer(({likes}) =>
   </ul>
 )
 
-const Likes2 = observer(({arrObjs}) =>
+const Likes2 = (({arrObjs}) =>
   <ul>
     <li>Likes2 render ====></li>
     {arrObjs.map((arrObj,index) =>
